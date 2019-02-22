@@ -102,7 +102,7 @@ public:
 
       Constructs a SimpleCrypt instance and initializes it with the given @arg key.
      */
-    explicit O0SimpleCrypt(unsigned long long key);
+    explicit O0SimpleCrypt(quint64 key);
 
     /**
       (Re-) initializes the key with the given @arg key.

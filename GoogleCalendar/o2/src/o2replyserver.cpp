@@ -61,6 +61,7 @@ void O2ReplyServer::onBytesReady() {
     qDebug() << "O2ReplyServer::onBytesReady: Sent reply";
 
     QByteArray data = socket->readAll();
+    qDebug()<<"socket Data="<<data;
     QMap<QString, QString> queryParams = parseQueryParams(&data);
     if (queryParams.isEmpty()) {
         if (tries_ < maxtries_ ) {
@@ -95,7 +96,8 @@ QMap<QString, QString> O2ReplyServer::parseQueryParams(QByteArray *data) {
     splitGetLine.remove("\r\n");
     splitGetLine.prepend("http://localhost");
     QUrl getTokenUrl(splitGetLine);
-
+    QUrl url=QUrl("https://www.googleapis.com/auth/calendar");
+    qDebug()<<"url="<<url;
     QList< QPair<QString, QString> > tokens;
 #if QT_VERSION < 0x050000
     tokens = getTokenUrl.queryItems();

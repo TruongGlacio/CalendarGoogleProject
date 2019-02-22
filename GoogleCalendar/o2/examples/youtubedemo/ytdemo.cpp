@@ -12,8 +12,8 @@
 
 const char GOOGLE_APP_KEY[]    = "226641755137-e296lcbd3co97lfobung6o9l3mgs72gl.apps.googleusercontent.com";
 //const char GOOGLE_APP_SECRET[] = "YOUR_YOUTUBE_APP_SECRET";
-const char YOUTUBE_SCOPE[] = "https://www.googleapis.com/auth/calendar";
-const char YOUTUBE_CHANNELS_LIST_URL[] = "https://www.googleapis.com/youtube/v3/channels?part=status&mine=true";
+const char CALENDAR_SCOPE[] = "https://www.googleapis.com/auth/calendar";
+const char CALENDAR_CHANNELS_LIST_URL[] = "https://www.googleapis.com/userinfo/v2/me";//"https://www.googleapis.com/oauth2/v1/certs";
 
 const int localPort = 8888;
 
@@ -27,7 +27,7 @@ YTDemo::YTDemo(QObject *parent) :
     o2Google_->setClientId(GOOGLE_APP_KEY);
    // o2Google_->setClientSecret(GOOGLE_APP_SECRET);
     o2Google_->setLocalPort(localPort);
-    o2Google_->setScope(YOUTUBE_SCOPE);
+    o2Google_->setScope(CALENDAR_SCOPE);
 
     // Create a store object for writing the received tokens
     O0SettingsStore *store = new O0SettingsStore(O2_ENCRYPTION_KEY);
@@ -55,7 +55,7 @@ void YTDemo::getUserChannelInfo() {
         return;
     }
 
-    QString channelsListUrl = QString(YOUTUBE_CHANNELS_LIST_URL);
+    QString channelsListUrl = QString(CALENDAR_CHANNELS_LIST_URL);
     QNetworkRequest request = QNetworkRequest(QUrl(channelsListUrl));
     QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
     O2Requestor *requestor = new O2Requestor(mgr, o2Google_, this);

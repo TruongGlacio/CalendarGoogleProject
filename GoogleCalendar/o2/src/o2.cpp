@@ -166,7 +166,7 @@ void O2::link() {
     if (linked()) {
         qDebug() << "O2::link: Linked already";
         Q_EMIT linkingSucceeded();
-        return;
+      //  return;
     }
 
     setLinked(false);
@@ -238,7 +238,8 @@ void O2::link() {
         QNetworkRequest tokenRequest(url);
         tokenRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
         QNetworkReply *tokenReply = manager_->post(tokenRequest, payload);
-
+        QByteArray arrayData=tokenReply->readAll();
+        qDebug()<<"array data recives="<<arrayData;
         connect(tokenReply, SIGNAL(finished()), this, SLOT(onTokenReplyFinished()), Qt::QueuedConnection);
         connect(tokenReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onTokenReplyError(QNetworkReply::NetworkError)), Qt::QueuedConnection);
     }
@@ -335,7 +336,7 @@ void O2::onTokenReplyFinished() {
     }
     if (tokenReply->error() == QNetworkReply::NoError) {
         QByteArray replyData = tokenReply->readAll();
-
+        qDebug()<<"data reply="<<tokenReply->readAll();
         // Dump replyData
         // SENSITIVE DATA in RelWithDebInfo or Debug builds
         //qDebug() << "O2::onTokenReplyFinished: replyData\n";
