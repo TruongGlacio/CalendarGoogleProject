@@ -17,7 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(o2/src/src.pri)
 SOURCES += \
         main.cpp \
-    calendar.cpp
+    calendar.cpp \
+    networkmanager.cpp
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -33,7 +34,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     calendar.h \
-    constdefine.h
+    constdefine.h \
+    networkmanager.h
 
 DISTFILES += \
     lib/credentials.json
