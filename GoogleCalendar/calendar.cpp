@@ -14,7 +14,7 @@
 const char GOOGLE_API_KEY[]    = "226641755137-e296lcbd3co97lfobung6o9l3mgs72gl.apps.googleusercontent.com";
 const char GOOGLE_APP_SECRET[] = "y9AOGTcf1VauLsrG8OrHRcUZ";
 const char CALENDAR_SCOPE[] = "https://www.googleapis.com/auth/calendar.events";
-const char CALENDAR_CHANNELS_LIST_URL[] = "https://accounts.google.com/o/oauth2/auth";
+const char CALENDAR_CHANNELS_LIST_URL[] = "https://calendar.google.com/calendar/ical/buixuantruong.tb%40gmail.com/private-d43d8fb17b020ee5766dd6e72ef81a80/basic.ics";
 const char CALENDAR_USER_EMAIL[]= "buixuantruong.tb@gmail.com";
 const char CALENDAR_USER_PASSWORD[]="@@@!Duongdai13061994";
 const char CALENDAR_TOKEN_URI[]="https://oauth2.googleapis.com/token";
@@ -73,8 +73,9 @@ void Calendar::getUserChannelInfo() {
         return;
     }
 
-    QString channelsListUrl = QString(CALENDAR_AUTH_URI);
-    QNetworkRequest request = QNetworkRequest(QUrl(channelsListUrl));
+    QString channelsListUrl = QString(CALENDAR_CHANNELS_LIST_URL);
+    QNetworkRequest request;
+    request.setUrl(QUrl(channelsListUrl));
     QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
     O2Requestor *requestor = new O2Requestor(mgr, o2Google_, this);
     requestId_ = requestor->get(request);
@@ -116,7 +117,6 @@ void Calendar::onLinkingSucceeded() {
 }
 
 void Calendar::onFinished(int requestId, QNetworkReply::NetworkError error, QByteArray replyData) {
-    qDebug()<<"replyData="<<replyData;
     if (requestId != requestId_)
         return;
 
@@ -136,7 +136,8 @@ void Calendar::onFinished(int requestId, QNetworkReply::NetworkError error, QByt
         return;
     }
 
-    qInfo() << "Channel info: " << reply;
+    qDebug()<<"replyData="<<reply;
+  //  qInfo() << "Channel info: " << reply;
     qDebug() << "Channel info received!";
     emit channelInfoReceived();
 }
